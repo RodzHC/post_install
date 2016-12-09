@@ -19,11 +19,11 @@ else
 
 	#VLC Media Player
 	echo "Installing VLC Media Player"
-	apt-get install vlc
+	apt-get install vlc -y
 
 	#Unity tweak tool
 	echo "Installing Unity Tweak Tool"
-	apt-get install unity-tweak-tool
+	apt-get install unity-tweak-tool -y
 
 	#Chrome
 	echo "Installing Google Chrome"
@@ -34,7 +34,7 @@ else
 
 	#Install Sublime Text 3*
 	echo "Installing Sublime Text"
-	add-apt-repository ppa:webupd8team/sublime-text-3
+	add-apt-repository ppa:webupd8team/sublime-text-3 -y
 	apt-get update
 	apt-get install sublime-text-installer -y
 
@@ -85,36 +85,28 @@ else
 
 	#Paper GTK Theme
 	echo "Installing Paper GTK Theme"
-	add-apt-repository ppa:snwh/pulp
+	add-apt-repository ppa:snwh/pulp -y
 	apt-get update
 	apt-get install paper-gtk-theme -y
 	apt-get install paper-icon-theme -y
 
 	#Arc Theme
 	echo "Installing Arc Theme"
-	add-apt-repository ppa:noobslab/themes
+	add-apt-repository ppa:noobslab/themes -y
 	apt-get update
 	apt-get install arc-theme -y
 
 	#Arc Icons
 	echo "Installing Arc Icons"
-	add-apt-repository ppa:noobslab/icons
+	add-apt-repository ppa:noobslab/icons -y
 	apt-get update
 	apt-get install arc-icons -y
 
 	#Numix Icons
 	echo "Installing Numic Icons"
-	apt-add-repository ppa:numix/ppa
+	apt-add-repository ppa:numix/ppa -y
 	apt-get update
 	apt-get install numix-icon-theme numix-icon-theme-circle -y
-
-	#Skype for Linux
-	echo "Installing Skype For Linux"
-	apt install apt-transport-https -y
-	curl https://repo.skype.com/data/SKYPE-GPG-KEY | apt-key add -
-	echo "deb https://repo.skype.com/deb stable main" | tee /etc/apt/sources.list.d/skypeforlinux.list
-	apt update 
-	apt install skypeforlinux -y
 
 	#Teamviewer
 	echo "Installing Teamviewer"
@@ -122,4 +114,12 @@ else
 	dpkg -i teamviewer_i386.deb
 	apt-get install -f -y
 	rm -rf teamviewer_i386.deb
+
+	#Skype for Linux
+	echo "Installing Skype For Linux"
+	apt install apt-transport-https -y
+	curl https://repo.skype.com/data/SKYPE-GPG-KEY | apt-key add -
+	echo "deb https://repo.skype.com/deb stable main" | tee /etc/apt/sources.list.d/skypeforlinux.list
+	apt update 
+	apt install skypeforlinux -y	
 fi
