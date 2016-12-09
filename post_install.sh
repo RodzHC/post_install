@@ -4,7 +4,6 @@ if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    exit 1
 else
-compo
 	#Update and Upgrade
 	echo "Updating and Upgrading"
 	apt-get update && sudo apt-get upgrade -y
@@ -28,10 +27,10 @@ compo
 
 	#Chrome
 	echo "Installing Google Chrome"
-	deb http://dl.google.com/linux/chrome/deb/ stable main
-	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-	apt-get update
-	apt-get install google-chrome-stable
+	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+	sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+	apt-get update 
+	apt-get install google-chrome-stable -y
 
 	#Install Sublime Text 3*
 	echo "Installing Sublime Text"
@@ -52,14 +51,18 @@ compo
 	echo "Cofiguring apache to run Phpmyadmin"
 	echo "Include /etc/phpmyadmin/apache.conf" >> /etc/apache2/apache2.conf
 
+
+	echo "Restarting Apache Server"
+	service apache2 restart
+
 	#Install Build Essentials
 	echo "Installing Build Essentials"
 	apt-get install -y build-essential
 
 	#Install Nodejs
 	echo "Installing Nodejs"
-	curl -sL https://deb.nodesource.com/setup_6.x | -E bash -
-	apt-get install -y nodejs
+	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+	sudo apt-get install -y nodejs
 
 	#Install git
 	echo "Installing Git, please congiure git later..."
@@ -106,10 +109,17 @@ compo
 	apt-get install numix-icon-theme numix-icon-theme-circle -y
 
 	#Skype for Linux
-	ech "Installing Skype For Linux"
+	echo "Installing Skype For Linux"
 	apt install apt-transport-https -y
 	curl https://repo.skype.com/data/SKYPE-GPG-KEY | apt-key add -
 	echo "deb https://repo.skype.com/deb stable main" | tee /etc/apt/sources.list.d/skypeforlinux.list
 	apt update 
 	apt install skypeforlinux -y
+
+	#Teamviewer
+	echo "Installing Teamviewer"
+	wget http://download.teamviewer.com/download/teamviewer_i386.deb
+	dpkg -i teamviewer_i386.deb
+	apt-get install -f -y
+	rm -rf teamviewer_i386.deb
 fi
