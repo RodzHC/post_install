@@ -41,17 +41,17 @@ else
 				;;
 
 			2)
-	            #Install LAMP stack
+			    	#Install LAMP stack
 				echo "Installing Apache"
 				apt install apache2 -y
 	            
-	            echo "Installing Mysql Server"
+	            		echo "Installing Mysql Server"
 	 			apt install mysql-server -y
 
-	            echo "Installing PHP"
+	            		echo "Installing PHP"
 				apt install php libapache2-mod-php php-mcrypt php-mysql -y
 	            
-	            echo "Installing Phpmyadmin"
+	            		echo "Installing Phpmyadmin"
 				apt install phpmyadmin -y
 
 				echo "Cofiguring apache to run Phpmyadmin"
