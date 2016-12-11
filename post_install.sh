@@ -32,8 +32,8 @@ else
 	for choice in $choices
 	do
 	    case $choice in
-	        1)
-	            #Install Sublime Text 3*
+	        	1)
+	            		#Install Sublime Text 3*
 				echo "Installing Sublime Text"
 				add-apt-repository ppa:webupd8team/sublime-text-3 -y
 				apt update
@@ -60,7 +60,7 @@ else
 				echo "Restarting Apache Server"
 				service apache2 restart
 				;;
-            3)	
+            		3)	
 				#Install Build Essentials
 				echo "Installing Build Essentials"
 				apt install -y build-essential
