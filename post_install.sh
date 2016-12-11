@@ -82,8 +82,8 @@ else
 				#Composer
 				echo "Installing Composer"
 				curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-	    		;;
-	    	7)
+	    			;;
+	    		7)
 				#JDK 8
 				echo "Installing JDK 8"
 				apt install python-software-properties -y
@@ -106,7 +106,7 @@ else
 				echo "Installing VLC Media Player"
 				apt install vlc -y
 				;;
-	    	11)
+			11)
 				#Unity tweak tool
 				echo "Installing Unity Tweak Tool"
 				apt install unity-tweak-tool -y
