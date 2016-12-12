@@ -1,8 +1,8 @@
-#! /bin/bash
-if [ "$(id -u)" != "0" ]; then
-   echo "This script must be run as root" 1>&2
-   exit 1
-else
+#!/bin/bash
+
+#Become master of the everything within this host
+[ `whoami` = root ] || exec su -c $0 root
+
 	#Update and Upgrade
 	echo "Updating and Upgrading"
 	apt-get update && sudo apt-get upgrade -y
@@ -81,8 +81,22 @@ else
 			6)
 				#Composer
 				echo "Installing Composer"
-				curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-	    			;;
+                                EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
+                                php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+                                ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
+
+                                if [ "$EXPECTED_SIGNATURE" = "$ACTUAL_SIGNATURE" ]
+                                  then
+                                    php composer-setup.php --quiet --install-dir=/bin --filename=composer
+                                    RESULT=$?
+                                    rm composer-setup.php
+                                    exit $RESULT
+                                else
+                                  >&2 echo 'ERROR: Invalid installer signature'
+                                  rm composer-setup.php
+                                  exit 1
+                                fi
+				;;
 	    		7)
 				#JDK 8
 				echo "Installing JDK 8"
@@ -171,4 +185,3 @@ else
 				;;
 	    esac
 	done
-fi
