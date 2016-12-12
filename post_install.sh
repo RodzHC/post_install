@@ -90,18 +90,16 @@
                                     php composer-setup.php --quiet --install-dir=/bin --filename=composer
                                     RESULT=$?
                                     rm composer-setup.php
-                                    exit $RESULT
                                 else
                                   >&2 echo 'ERROR: Invalid installer signature'
                                   rm composer-setup.php
-                                  exit 1
                                 fi
 				;;
 	    		7)
 				#JDK 8
 				echo "Installing JDK 8"
 				apt install python-software-properties -y
-				add-apt-repository ppa:webupd8team/java
+				add-apt-repository ppa:webupd8team/java -y
 				apt update
 				apt install oracle-java8-installer -y
 				;;
