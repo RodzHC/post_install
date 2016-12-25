@@ -27,8 +27,18 @@ else
 	         15 "Paper GTK Theme" off
 	         16 "Arch Theme" off
 	         17 "Arc Icons" off
-	         18 "Numix Icons" off)
-	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+	         18 "Numix Icons" off
+			 19 "Multiload Indicator" off
+			 20 "Pensor" off
+			 21 "Netspeed Indicator" off
+			 22 "Generate SSH Keys" off
+			 23 "Ruby" off
+			 24 "Sass" off
+			 25 "Vnstat" off
+			 26 "Webpack" off
+			 27 "Grunt" off
+			 28 "Gulp" off)
+		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 	clear
 	for choice in $choices
 	do
@@ -46,22 +56,24 @@ else
 				echo "Installing Apache"
 				apt install apache2 -y
 	            
-	            		echo "Installing Mysql Server"
+    			echo "Installing Mysql Server"
 	 			apt install mysql-server -y
 
-	            		echo "Installing PHP"
+        		echo "Installing PHP"
 				apt install php libapache2-mod-php php-mcrypt php-mysql -y
 	            
-	            		echo "Installing Phpmyadmin"
+        		echo "Installing Phpmyadmin"
 				apt install phpmyadmin -y
 
 				echo "Cofiguring apache to run Phpmyadmin"
 				echo "Include /etc/phpmyadmin/apache.conf" >> /etc/apache2/apache2.conf
 				
+				echo "Enabling module rewrite"
+				sudo a2enmod rewrite
 				echo "Restarting Apache Server"
 				service apache2 restart
 				;;
-            		3)	
+    		3)	
 				#Install Build Essentials
 				echo "Installing Build Essentials"
 				apt install -y build-essential
@@ -82,19 +94,19 @@ else
 			6)
 				#Composer
 				echo "Installing Composer"
-                                EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
-                                php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-                                ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
+	            EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
+	            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	            ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
 
-                                if [ "$EXPECTED_SIGNATURE" = "$ACTUAL_SIGNATURE" ]
-                                  then
-                                    php composer-setup.php --quiet --install-dir=/bin --filename=composer
-                                    RESULT=$?
-                                    rm composer-setup.php
-                                else
-                                  >&2 echo 'ERROR: Invalid installer signature'
-                                  rm composer-setup.php
-                                fi
+	            if [ "$EXPECTED_SIGNATURE" = "$ACTUAL_SIGNATURE" ]
+	              then
+	                php composer-setup.php --quiet --install-dir=/bin --filename=composer
+	                RESULT=$?
+	                rm composer-setup.php
+	            else
+	              >&2 echo 'ERROR: Invalid installer signature'
+	              rm composer-setup.php
+	            fi
 				;;
 	    		7)
 				#JDK 8
@@ -181,6 +193,48 @@ else
 				apt-add-repository ppa:numix/ppa -y
 				apt-get update
 				apt-get install numix-icon-theme numix-icon-theme-circle -y
+				;;
+			19)	
+				echo "Installing Multiload Indicator"
+				apt install indicator-multiload -y
+				;;
+			20)
+				apt install psensor -y
+				;;
+			21)
+				echo "Installing NetSpeed Indicator"
+				apt-add-repository ppa:fixnix/netspeed -y
+				apt-get update
+				apt install indicator-netspeed-unity -y
+
+			22)
+				echo "Generating SSH keys"
+				ssh-keygen -t rsa -b 4096
+				;;
+			23)
+				echo "Installing Ruby"
+				apt install ruby-full -y
+				;;
+
+			24)
+				echo "Installing Sass"
+				gem install sass
+				;;
+			25)
+				echo "Installing Vnstat"
+				apt install vnstat -y
+				;;
+			26)
+				echo "Installing Webpack"
+				npm install webpack -g
+				;;
+			27)
+				echo "Installing Grunt"
+				npm install grunt -g
+				;;
+			28)
+				echo "Installing Gulp"
+				npm install gulp -g
 				;;
 	    esac
 	done
