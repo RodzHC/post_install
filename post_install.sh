@@ -39,10 +39,10 @@ else
 			 27 "Grunt" off
 			 28 "Gulp" off)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-	clear
-	for choice in $choices
-	do
-	    case $choice in
+		clear
+		for choice in $choices
+		do
+		    case $choice in
 	        	1)
 	            		#Install Sublime Text 3*
 				echo "Installing Sublime Text"
