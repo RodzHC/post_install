@@ -206,7 +206,7 @@ else
 				apt-add-repository ppa:fixnix/netspeed -y
 				apt-get update
 				apt install indicator-netspeed-unity -y
-
+				;;
 			22)
 				echo "Generating SSH keys"
 				ssh-keygen -t rsa -b 4096
