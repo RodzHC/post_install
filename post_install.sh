@@ -57,7 +57,9 @@ else
 		 31 "Visual Studio Code" off
 		 32 "Brackets" off
 		 33 "Gimps" off
-		 34 "Slack" off)
+		 34 "Slack" off
+		 35 "Ubuntu Restricted Extras" on
+		 36 "Gnome Desktop" off)
 
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
@@ -291,6 +293,12 @@ else
 				wget -O slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.8.2-amd64.deb
 				sudo dpkg -i slack-desktop.deb
 				sudo apt-get install -f -y
+				;;
+			35)	echo "Ubuntu Restricted Extras"
+				sudo apt-get install ubuntu-restricted-extras -y
+				;;
+			36)	echo "Installing The Gnome Desktop"
+				sudo apt-get install ubuntu-gnome-desktop -y
 				;; 
 	    esac
 	done
