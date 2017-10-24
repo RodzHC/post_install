@@ -11,6 +11,18 @@ curl_check ()
   fi
 }
 
+node_check ()
+{
+  echo "Checking for Nodejs..."
+  if command -v node > /dev/null; then
+    echo "Detected Nodejs..."
+  else
+    echo "Installing Nodejs"
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    apt install -y nodejs
+  fi
+}
+
 if [[ $EUID -ne 0 ]]; then
    	echo "This script must be run as root" 
    	exit 1
@@ -59,7 +71,8 @@ else
 		 33 "Gimps" off
 		 34 "Slack" off
 		 35 "Ubuntu Restricted Extras" on
-		 36 "Gnome Desktop" off)
+		 36 "Gnome Desktop" off
+		 37 "Yeoman & generators" off)
 
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
@@ -134,8 +147,8 @@ else
 				fi
 				;;
 			7)
-				#JDK 8
-				echo "Installing JDK 8"
+				#JDK 9
+				echo "Installing JDK 9"
 				apt install python-software-properties -y
 				add-apt-repository ppa:webupd8team/java -y
 				apt update
@@ -266,7 +279,9 @@ else
 				sudo dpkg -i atom.deb
 				# Install Atom's dependencies if they are missing
 				sudo apt-get -f install -y
+				rm -f atom.deb	
 				;;
+
 			30)	echo "Installing the .Net Core 2.0.0 SDK"
 				curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 				sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
@@ -274,6 +289,7 @@ else
 				sudo apt-get update
 				sudo apt-get install dotnet-sdk-2.0.0 -y
 				;;
+
 			31)	echo "Installing Visual Studio Code"
 				curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 				sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
@@ -281,25 +297,36 @@ else
 				sudo apt update
 				sudo apt install code -y
 				;;
+
 			32)	echo "Installing Brackets"
-				sudo add-apt-repository ppa:webupd8team/brackets
+				sudo add-apt-repository ppa:webupd8team/brackets -y
 				sudo apt-get update
 				sudo apt-get install brackets -y
 				;;
+
 			33)	echo "Installing Gimp"
 				sudo apt-get install gimp -y
 				;;
+
 			34) 	echo "Installing Slack"
 				wget -O slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.8.2-amd64.deb
 				sudo dpkg -i slack-desktop.deb
 				sudo apt-get install -f -y
+				rm -f slack-desktop.deb
 				;;
+
 			35)	echo "Ubuntu Restricted Extras"
 				sudo apt-get install ubuntu-restricted-extras -y
 				;;
 			36)	echo "Installing The Gnome Desktop"
 				sudo apt-get install ubuntu-gnome-desktop -y
 				;; 
+
+			37)	# Yeoman and generators
+				node_check
+				echo "Installing Yeoman and generator webapp, aspnet, angular"
+				sudo npm install -g grunt-cli bower yo generator-karma generator-angular gulp-cli generator-angular-fullstack bower generator-webapp generator-wordpress generator-aspnet generator-generator	
+				;;
 	    esac
 	done
 fi
