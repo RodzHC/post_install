@@ -1,5 +1,16 @@
 #!/bin/bash
 
+curl_check ()
+{
+  echo "Checking for curl..."
+  if command -v curl > /dev/null; then
+    echo "Detected curl..."
+  else
+    echo "Installing curl..."
+    apt-get install -q -y curl
+  fi
+}
+
 if [[ $EUID -ne 0 ]]; then
    	echo "This script must be run as root" 
    	exit 1
@@ -7,6 +18,9 @@ else
 	#Update and Upgrade
 	echo "Updating and Upgrading"
 	apt-get update && sudo apt-get upgrade -y
+	
+	#Check if curl is installed
+	curl_check
 
 	sudo apt-get install dialog
 	cmd=(dialog --separate-output --checklist "Please Select Software you want to install:" 22 76 16)
@@ -37,7 +51,14 @@ else
 			 25 "Vnstat" off
 			 26 "Webpack" off
 			 27 "Grunt" off
-			 28 "Gulp" off)
+			 28 "Gulp" off
+		 29 "Atom" off
+		 30 ".Net Core 2.0.0 SDK" off
+		 31 "Visual Studio Code" off
+		 32 "Brackets" off
+		 33 "Gimps" off
+		 34 "Slack" off)
+
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -46,9 +67,11 @@ else
 	        	1)
 	            		#Install Sublime Text 3*
 				echo "Installing Sublime Text"
-				add-apt-repository ppa:webupd8team/sublime-text-3 -y
-				apt update
-				apt install sublime-text-installer -y
+				wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+				sudo apt-get install apt-transport-https
+				echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+				sudo apt-get update
+				sudo apt-get install sublime-text -y
 				;;
 
 			2)
@@ -236,6 +259,39 @@ else
 				echo "Installing Gulp"
 				npm install gulp -g
 				;;
+			29)	echo "Installing Atom"
+				wget https://atom.io/download/deb -O atom.deb
+				sudo dpkg -i atom.deb
+				# Install Atom's dependencies if they are missing
+				sudo apt-get -f install -y
+				;;
+			30)	echo "Installing the .Net Core 2.0.0 SDK"
+				curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+				sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+				sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list'
+				sudo apt-get update
+				sudo apt-get install dotnet-sdk-2.0.0 -y
+				;;
+			31)	echo "Installing Visual Studio Code"
+				curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+				sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+				sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+				sudo apt update
+				sudo apt install code -y
+				;;
+			32)	echo "Installing Brackets"
+				sudo add-apt-repository ppa:webupd8team/brackets
+				sudo apt-get update
+				sudo apt-get install brackets -y
+				;;
+			33)	echo "Installing Gimp"
+				sudo apt-get install gimp -y
+				;;
+			34) 	echo "Installing Slack"
+				wget -O slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.8.2-amd64.deb
+				sudo dpkg -i slack-desktop.deb
+				sudo apt-get install -f -y
+				;; 
 	    esac
 	done
 fi
