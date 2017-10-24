@@ -72,7 +72,8 @@ else
 		 34 "Slack" off
 		 35 "Ubuntu Restricted Extras" on
 		 36 "Gnome Desktop" off
-		 37 "Yeoman & generators" off)
+		 37 "Yeoman & generators" off
+		 38 "Spotify" off)
 
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
@@ -330,6 +331,23 @@ else
 				echo "Installing Yeoman and generator webapp, aspnet, angular"
 				sudo npm install -g grunt-cli bower yo generator-karma generator-angular gulp-cli generator-angular-fullstack bower generator-webapp generator-wordpress generator-aspnet generator-generator	
 				;;
+			38) # Spotify
+				# 1. Add the Spotify repository signing keys to be able to verify downloaded packages
+				sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+
+				# 2. Add the Spotify repository
+				echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+
+				# 3. Update list of available packages
+				sudo apt-get update
+
+				# 4. Install Spotify
+				sudo apt-get install spotify-client -y
+
+
+
+
+
 	    esac
 	done
 fi
