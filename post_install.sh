@@ -42,7 +42,7 @@ else
 	         4 "Node.js" off
 	         5 "Git" off
 	         6 "Composer" off
-	         7 "JDK 8" off
+	         7 "JDK 9" off
 	         8 "Bleachbit" off
 	         9 "Ubuntu Restricted Extras" off
 	         10 "VLC Media Player" off
@@ -152,7 +152,7 @@ else
 				apt install python-software-properties -y
 				add-apt-repository ppa:webupd8team/java -y
 				apt update
-				apt install oracle-java8-installer -y
+				apt install oracle-java9-installer -y
 				;;
 			8)
 				#Bleachbit
