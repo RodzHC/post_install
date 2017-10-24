@@ -344,10 +344,6 @@ else
 				# 4. Install Spotify
 				sudo apt-get install spotify-client -y
 
-
-
-
-
 	    esac
 	done
 fi
