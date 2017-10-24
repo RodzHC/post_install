@@ -264,14 +264,17 @@ else
 				;;
 			26)
 				echo "Installing Webpack"
+				node_check
 				npm install webpack -g
 				;;
 			27)
 				echo "Installing Grunt"
+				node_check
 				npm install grunt -g
 				;;
 			28)
 				echo "Installing Gulp"
+				node_check
 				npm install gulp -g
 				;;
 			29)	echo "Installing Atom"
