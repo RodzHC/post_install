@@ -102,7 +102,10 @@ else
 			64 "Peek" on
 			65 "Stacer" on
 			66 "OpenPics" on
-			67 "Remmina" on)
+			67 "Remmina" on
+			68 "Reset Mice Fix for Microsoft Sculpt Mouse Scroll" off
+			69 "Gamecube SDK tools and Swiss" off
+			70 "Memory card PCI express slot fix for Dell computers" off)
 
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
@@ -392,12 +395,18 @@ else
 				sudo apt-get install firefox
 				;;
 
-			42) #Jekyll and all Ruby stuff
+			42) #Jekyll, GITHub pages and Ruby
 				sudo apt-get install zlib1g-dev
 				sudo apt-get install ruby-full
 				sudo apt-get install rubygems
 				sudo bundle install
 				sudo gem install bundler
+				sudo apt install ruby-bundler
+				sudo gem update bundler
+				sudo apt-get install ruby-all-dev
+				sudo gem install ffi -v '1.9.18'
+				sudo gem install jekyll-feed
+				bundle update github-pages
 				;;
 
 			43) #Speed up mouse scroller
@@ -590,6 +599,88 @@ else
 				sudo apt-add-repository ppa:remmina-ppa-team/remmina-next
 				sudo apt-get update
 				sudo apt-get install remmina remmina-plugin-rdp remmina-plugin-gnome libfreerdp-plugins-standard
+				;;
+
+			68) #ResetMSMice
+
+				#Dependencies
+				sudo apt-get install pkg-config
+				sudo apt-get install libusb-1.0-0-dev
+				sudo apt-get install libgtk2.0-dev
+
+				wget https://github.com/paulrichards321/resetmsmice/archive/master.zip
+				sudo unzip master.zip -d /resetmsmice
+
+				sudo mv /resetmsmice/resetmsmice-master /opt/resetmsmice
+				sudo chmod +x /opt/resetmsmice;
+				sudo rm master.zip
+				sudo rm -r /resetmsmice
+				
+				cd /opt/resetmsmice
+				sudo ./configure
+				sudo make
+				sudo make install
+
+				#go back to home user dir
+				cd 
+
+				#now it is installed use this command to open and configure the mouse settings
+				#sudo resetmsmice-gui
+				;;
+
+			69) #DevKitPro + Swiss (for Gamecube Swiss development)
+				sudo apt install gcc build-essential -y
+				sudo apt-get install p7zip-full
+				sudo dpkg --add-architecture i386
+				wget -nc https://dl.winehq.org/wine-builds/Release.key
+				sudo apt-key add Release.key
+				sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
+				sudo apt-get update
+				sudo apt-get install --install-recommends winehq-stable
+
+				wget https://raw.githubusercontent.com/devkitPro/installer/master/perl/devkitPPCupdate.pl
+				
+				sudo mkdir -p /opt/devkitpro
+				sudo chmod 777 /opt/devkitpro
+				sudo mv /home/paul/Documents/devkitPPCupdate.pl /opt/
+				cd /opt/
+				sudo perl devkitPPCupdate.pl
+
+				export DEVKITPRO=/opt/devkitpro
+				export DEVKITPPC=$DEVKITPRO/devkitPPC
+
+				printf "export DEVKITPRO=/opt/devkitpro\n" >> /home/paul/.bashrc
+				printf "export DEVKITPPC=$DEVKITPRO/devkitPPC\n" >> /home/paul/.bashrc
+
+				#Download latest Swiss and make file
+				wget https://github.com/emukidid/swiss-gc/archive/master.zip
+				sudo unzip master.zip -d /swiss-gc
+				sudo mkdir -p /opt/swiss-gc
+				sudo chmod +x /opt/swiss-gc;
+
+				sudo mv /swiss-gc/swiss-gc-master /opt/swiss-gc
+				sudo rm master.zip
+				sudo rm -r /swiss-gc
+			
+				#Make Swiss patched Gamecube only version of libfat-frag, and overwrite one in DevKitPro
+				cd /opt/swiss-gc/cube/libfat-frag/src
+				make -f Makefile cube-release
+				sudo mv /opt/swiss-gc/cube/libfat-frag/src/libogc/lib/cube/libfat.a /opt/devkitpro/libogc/lib/cube/libfat.a
+
+				#Make Swiss DOL files
+				sudo cd /opt/swiss-gc
+				make -f Makefile
+
+				#Go back to home user directory
+				cd
+				;;
+
+			70) #SD card slot PCI express on Dell laptops do not work (fix)
+				sudo rmmod sdhci sdhci_pci sdhci_acpi
+				sudo modprobe sdhci debug_quirks2="0x10000"
+				sudo modprobe sdhci_pci
+
+				sudo printf "options sdhci debug_quirks2=0x10000" > /etc/modprobe.d/sd-cart-fix.conf
 				;;
 	    esac
 	done
