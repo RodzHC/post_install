@@ -35,12 +35,12 @@ if [[ $EUID -ne 0 ]]; then
 else
 	#Update and Upgrade
 	echo "Updating and Upgrading"
-	# apt-get update && sudo apt-get upgrade -y
+	apt-get update && sudo apt-get upgrade -y
 
 	#Check if curl is installed
 	curl_check
 
-	# sudo apt-get install dialog
+	sudo apt-get install dialog
 
 	box_message="DEV"
 	options=(
@@ -88,21 +88,8 @@ else
 	)
 	make_dialog
 
-	echo ${all_choices[@]}
-
-	read -p "Do you wish to install this program?" yn
-	case $yn in
-	[Yy]*)
-		make install
-		break
-		;;
-	[Nn]*) exit ;;
-	*) echo "Please answer yes or no." ;;
-	esac
-
 	clear
 	for choice in ${all_choices[@]}; do
-		echo test $choice
 		case $choice in
 		1)
 			#Install Nodejs
@@ -185,7 +172,8 @@ else
 			;;
 		105) ;;
 
-		151)
+		\
+			151)
 
 			#Install LAMP stack
 			echo "Installing Apache"
