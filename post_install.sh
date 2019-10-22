@@ -35,18 +35,18 @@ if [[ $EUID -ne 0 ]]; then
 else
 	#Update and Upgrade
 	echo "Updating and Upgrading"
-	apt-get update && sudo apt-get upgrade -y
+	# apt-get update && sudo apt-get upgrade -y
 
 	#Check if curl is installed
 	curl_check
 
-	sudo apt-get install dialog
+	# sudo apt-get install dialog
 
 	box_message="DEV"
 	options=(
 		1 "Node.js" on
 		2 "Python" off #Ubuntu 18.4 comes with python 3.6
-		3 "Build Essentials" off
+		3 "Build Essentials" on
 	)
 	make_dialog
 
@@ -70,7 +70,7 @@ else
 
 	box_message="Servidores"
 	options=(
-		151 "LAMP Stack" on
+		151 "LAMP Stack" off
 	)
 	make_dialog
 
@@ -88,8 +88,21 @@ else
 	)
 	make_dialog
 
+	echo ${all_choices[@]}
+
+	read -p "Do you wish to install this program?" yn
+	case $yn in
+	[Yy]*)
+		make install
+		break
+		;;
+	[Nn]*) exit ;;
+	*) echo "Please answer yes or no." ;;
+	esac
+
 	clear
-	for choice in $all_choices; do
+	for choice in ${all_choices[@]}; do
+		echo test $choice
 		case $choice in
 		1)
 			#Install Nodejs
@@ -268,5 +281,6 @@ else
 			;;
 
 		esac
+
 	done
 fi
