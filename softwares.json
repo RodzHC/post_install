@@ -1,0 +1,106 @@
+{
+    "data":[
+        {
+            "module":"DEV Tools.",
+            "number":"1",
+            "name":"Nodejs"
+        },
+        {
+            "module":"DEV Tools.",
+            "number":"2",
+            "name":"Python"
+        },
+        {
+            "module":"DEVOPs.",
+            "number":"30",
+            "name":"git"
+        },
+        {
+            "module":"DEVOPs.",
+            "number":"31",
+            "name":"Dockers"
+        },
+        {
+            "module":"Text editors and IDEs.",
+            "number":"101",
+            "name":"Sublime"
+        },
+        {
+            "module":"Text editors and IDEs.",
+            "number":"102",
+            "name":"Atom"
+        },
+        {
+            "module":"Text editors and IDEs.",
+            "number":"103",
+            "name":"VisualStudio"
+        },
+        {
+            "module":"Text editors and IDEs.",
+            "number":"104",
+            "name":"Brackets"
+        },
+        {
+            "module":"Text editors and IDEs.",
+            "number":"105",
+            "name":"Pycharm"
+        },
+        {
+            "module":"Text editors and IDEs.",
+            "number":"106",
+            "name":"Vim"
+        },
+        {
+            "module":"Servers.",
+            "number":"151",
+            "name":"LAMP",
+            "switch":"off"
+        },
+        {
+            "module":"Utilities.",
+            "number":"201",
+            "name":"VLC"
+        },
+        {
+            "module":"Utilities.",
+            "number":"202",
+            "name":"Skype"
+        },
+        {
+            "module":"Utilities.",
+            "number":"203",
+            "name":"Chrome"
+        },
+        {
+            "module":"Utilities.",
+            "number":"204",
+            "name":"Teamviwer"
+        },
+        {
+            "module":"Utilities.",
+            "number":"205",
+            "name":"Spotfy"
+        },
+        {
+            "module":"Utilities.",
+            "number":"206",
+            "name":"Slack"
+        },
+        {
+            "module":"Utilities.",
+            "number":"207",
+            "name":"VirtualBox"
+        },
+        {
+            "module":"Utilities.",
+            "number":"208",
+            "name":"Terminator"
+        },
+        {
+            "module":"Utilities.",
+            "number":"209",
+            "name":"ZSH"
+        }
+
+    ]
+}
