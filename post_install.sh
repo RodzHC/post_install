@@ -1,5 +1,5 @@
 #!/bin/bash
-
+JSON_FILE="modules.json"
 curl_check() {
 	echo "Checking for curl..."
 	if command -v curl >/dev/null; then
@@ -16,9 +16,10 @@ make_dialog() {
 	shift
 	local options=("$@")
 	echo $options
-	cmd=(dialog --separate-output --checklist "$box_message" 22 76 16)
-	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+	local cmd=(dialog --separate-output --checklist "$box_message" 22 76 16)
+	local choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 	all_choices=(${choices[@]} ${all_choices[@]})
+	clear
 }
 
 update_upgrade(){
@@ -31,7 +32,8 @@ checks() {
 		#Check if curl is installed
 	curl_check
 
-	sudo apt-get install dialog
+	sudo apt-get install -y dialog jq
+	
 }
 
 if [[ $EUID -ne 0 ]]; then
@@ -39,7 +41,7 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 else
 	update_upgrade
-	# checks
+	checks
 
 	arr1=(1 "Node.js" on 2 "Python" off 3 "Build Essentials" on)
 	make_dialog "DEV" ${arr1[@]}
@@ -54,5 +56,15 @@ else
 	
 
 	#clear
+_jq() {
+                echo ${1} | base64 --decode | jq -r ${2}
+        }
 
+for row1 in $(jq -r '.modules[] | @base64' $JSON_FILE ) ; do
+       
+        
+        local dec_Row=$(echo ${row1} | base64 --decode)
+		echo dec_Row
+		
 
+done

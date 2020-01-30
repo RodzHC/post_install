@@ -1,0 +1,135 @@
+{
+    "modules": [
+        {
+            "order": "1",
+            "name": "DEV Tools.",
+            "itens": [
+                {
+                    "number": "1",
+                    "name": "Nodejs",
+                    "children": [
+                        {
+                            "order": "1",
+                            "name": "Javascript_tools.",
+                            "itens": [
+                                {
+                                    "number": "1.1",
+                                    "name": "nodemon",
+                                    "text": "hotreload js server."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "number": "2",
+                    "name": "Python"
+                }
+            ]
+        },
+        {
+            "order": "2",
+            "name": "DEVOPs.",
+            "itens": [
+                {
+                    "number": "30",
+                    "name": "git"
+                },
+                {
+                    "number": "31",
+                    "name": "Dockers"
+                }
+            ]
+        },
+        {
+            "order": "3",
+            "name": "IDEs.",
+            "itens": [
+                {
+                    "number": "101",
+                    "name": "Sublime"
+                },
+                {
+                    "number": "102",
+                    "name": "Atom"
+                },
+                {
+                    "number": "103",
+                    "name": "VisualStudio"
+                },
+                {
+                    "number": "104",
+                    "name": "Brackets"
+                },
+                {
+                    "number": "105",
+                    "name": "Pycharm"
+                },
+                {
+                    "number": "106",
+                    "name": "Vim"
+                }
+            ]
+        },
+        {
+            "order": "4",
+            "name": "Servers.",
+            "itens": [
+                {
+                    "number": "151",
+                    "name": "LAMP",
+                    "switch": "off"
+                }
+            ]
+        },
+        {
+            "order": "5",
+            "name": "Utilities.",
+            "itens": [
+                {
+                    "number": "201",
+                    "name": "VLC"
+                },
+                {
+                    "number": "202",
+                    "name": "Skype"
+                },
+                {
+                    "number": "203",
+                    "name": "Chrome"
+                },
+                {
+                    "number": "204",
+                    "name": "Teamviwer"
+                },
+                {
+                    "number": "205",
+                    "name": "Spotfy"
+                },
+                {
+                    "number": "206",
+                    "name": "Slack"
+                },
+                {
+                    "number": "207",
+                    "name": "VirtualBox"
+                },
+                {
+                    "number": "208",
+                    "name": "Terminator"
+                }
+            ]
+        },
+        {
+            "order": "6",
+            "name": "Beautify.",
+            "itens": [
+                {
+                    
+                    "number": "301",
+                    "name": "ZSH"
+                }
+            ]
+        }
+    ]
+}
