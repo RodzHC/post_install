@@ -68,6 +68,10 @@
                 {
                     "number": "106",
                     "name": "Vim"
+                },
+                {
+                    "number": "107",
+                    "name": "IntelliJ"
                 }
             ]
         },
